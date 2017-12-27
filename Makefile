@@ -14,16 +14,16 @@ clean:
 fmt:
 	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _fmt
 
-build:
-	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _build
-
 test:
 	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _test
 
-install:
+build: fmt test
+	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _build
+
+install: build
 	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _install
 
-deploy:
+deploy: install
 	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _deploy
 
 
@@ -45,10 +45,10 @@ _build:
 	                                             -X 'main.buildDate=$(buildDate)'" 
 
 _test:
-    @echo "Pending: here the test"
+    @echo "Pending: here run the unit test"
 
 _install:
     @echo "Pending: here the build the docker image"
 
 _deploy:
-    @echo "Pending: here deploy the docker image"
+    @echo "Pending: here deploy (publish) the docker image"
