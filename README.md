@@ -1,5 +1,6 @@
 Tangram
 =======
+[![Build Status](https://travis-ci.org/thetangram/tangram.svg?branch=add_travis)](https://travis-ci.org/thetangram/tangram)
 
 Requirements
 ------------
