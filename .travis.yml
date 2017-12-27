@@ -1,5 +1,10 @@
 
 # https://docs.travis-ci.com/user/customizing-the-build/#The-Build-Lifecycle
+sudo: required
+
+services:
+  - docker
+
 script: make build
 
 #notifications:
