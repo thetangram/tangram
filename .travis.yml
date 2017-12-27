@@ -1,6 +1,9 @@
-language: go
 sudo: required
-services:
-  - docker
 
-script: make build
+language: go
+
+services:
+- docker
+
+script: 
+- make build
