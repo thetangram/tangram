@@ -1,0 +1,6 @@
+
+# https://docs.travis-ci.com/user/customizing-the-build/#The-Build-Lifecycle
+script: make build
+
+#notifications:
+#  slack: thetangram:ZjdLByI42rKGigbebteXg8uN
