@@ -1,11 +1,6 @@
-
-# https://docs.travis-ci.com/user/customizing-the-build/#The-Build-Lifecycle
+language: go
 sudo: required
-
 services:
   - docker
 
 script: make build
-
-#notifications:
-#  slack: thetangram:ZjdLByI42rKGigbebteXg8uN
