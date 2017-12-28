@@ -8,13 +8,15 @@
 **Tangram** is now in a conceptual phase. It's in scaffolding phase (configuring repo, setting up tooling, ...).
 
 
-## Requirements
+## Setup
+
+### Requirements
 
   - [Make](https://www.gnu.org/software/make/) as build automation tool. 
   - [Docker](https://www.docker.com/) as container engine.
 
 
-## How to build
+### Build
 
 TL:DR
 
@@ -27,6 +29,7 @@ This project uses **make** as build automation tool, so, all building project ta
 The project Makefile have this targets:
 
   - **compile** (default target): Compiles the project.
+  - **dependencies**: Update project dependencies.
   - **clean**: Clean all project artifacts
   - **fmt**: Formats the code
   - **test**: Run unit test
