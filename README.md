@@ -2,8 +2,10 @@
 
 [![Build Status](https://travis-ci.org/thetangram/tangram.svg?branch=add_travis)](https://travis-ci.org/thetangram/tangram) [![Go Report Card](https://goreportcard.com/badge/github.com/thetangram/tangram)](https://goreportcard.com/report/github.com/thetangram/tangram)
 
+
 ## Current status
 
+**Tangram** is now in a conceptual phase. It's in scaffolding phase (configuring repo, setting up tooling, ...).
 
 
 ## Requirements
