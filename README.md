@@ -1,16 +1,18 @@
-Tangram
-=======
-[![Build Status](https://travis-ci.org/thetangram/tangram.svg?branch=add_travis)](https://travis-ci.org/thetangram/tangram)
+# Tangram, an edge-side html composition server 
 
-Requirements
-------------
+<center>[![Build Status](https://travis-ci.org/thetangram/tangram.svg?branch=add_travis)](https://travis-ci.org/thetangram/tangram) [![Go Report Card](https://goreportcard.com/badge/github.com/thetangram/tangram)](https://goreportcard.com/report/github.com/thetangram/tangram)</center>
+
+## Current status
+
+
+
+## Requirements
 
   - [Make](https://www.gnu.org/software/make/) as build automation tool. 
   - [Docker](https://www.docker.com/) as container engine.
 
 
-How to build
-------------
+## How to build
 
 TL:DR
 
