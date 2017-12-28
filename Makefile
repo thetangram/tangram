@@ -3,32 +3,45 @@ version=$(shell cat VERSION)
 user="$(shell id -u):$(shell id -g)"
 build=$(shell git rev-parse --short HEAD)
 buildDate=$(shell date --rfc-3339=seconds)
+targetDir=/go/src/github.com/thetangram/tangram
 
 
 compile:
-	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _compile
+	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _compile
 
 clean:
-	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _clean
+	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _clean
+
+init-dependencies:
+	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _init-dependencies
+
+dependencies:
+	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _dependencies
 
 fmt:
-	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _fmt
+	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _fmt
 
 test:
-	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _test
+	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _test
 
 build: fmt test
-	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _build
+	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _build
 
 install: build
-	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _install
+	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _install
 
 deploy: install
-	@docker run --rm --user $(user) -v "$(PWD)":"$(PWD)" -w "$(PWD)" $(build-image) make _deploy
+	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _deploy
 
 
 _compile:
 	@go build -v
+
+_init-dependencies:
+	@dep init -v
+
+_dependencies:
+	@dep ensure -update
 
 _clean:
 	@go clean
