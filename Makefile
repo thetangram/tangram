@@ -48,7 +48,7 @@ _clean:
 	@go clean
 
 _fmt:
-	@go fmt
+	@go fmt ./...
 
 _test:
 	@go vet
