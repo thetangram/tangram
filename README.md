@@ -24,18 +24,18 @@ TL:DR
 $ make 
 ``` 
 
-This project uses **make** as build automation tool, so, all building project task are driven by **make**.
+This project uses ```make``` as build automation tool, so, all building project task are defined in ```Makefile```.
 
-The project Makefile have this targets:
+The project targets are:
 
-  - **compile** (default target): Compiles the project.
-  - **dependencies**: Update project dependencies.
-  - **clean**: Clean all project artifacts
-  - **fmt**: Formats the code
-  - **test**: Run unit test
-  - **build** (depends on fmt and test): Compiles the project and generates a full independent Linux binary artifact. 
-  - **install** (depends on build): Pending. Build the Docker container image.
-  - **deploy** (depends on install): Pending. Publish the Docker container image to registry.
+  - ```compile``` (default target): Compiles the project.
+  - ```dependencies```: Update project dependencies.
+  - ```clean```: Clean all project artifacts
+  - ```fmt```: Formats the code
+  - ```test```: Run unit test
+  - ```build``` (depends on ```fmt``` and ```test```): Compiles the project and generates a full independent Linux binary artifact. 
+  - ```install``` (depends on ```build```): Pending. Build the Docker container image.
+  - ```deploy``` (depends on ```install```): Pending. Publish the Docker container image to registry.
 
 For example, to compile project while working: 
 
