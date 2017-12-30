@@ -1,6 +1,6 @@
 # Tangram, an edge-side html composition server 
 
-[![Build Status](https://travis-ci.org/thetangram/tangram.svg?branch=add_travis)](https://travis-ci.org/thetangram/tangram) [![Go Report Card](https://goreportcard.com/badge/github.com/thetangram/tangram)](https://goreportcard.com/report/github.com/thetangram/tangram) [![GoDoc](https://godoc.org/github.com/thetangram/tangram?status.svg)]
+[![Build Status](https://travis-ci.org/thetangram/tangram.svg?branch=add_travis)](https://travis-ci.org/thetangram/tangram) [![Go Report Card](https://goreportcard.com/badge/github.com/thetangram/tangram)](https://goreportcard.com/report/github.com/thetangram/tangram) [![GoDoc](https://godoc.org/github.com/thetangram/tangram?status.svg)](https://godoc.org/github.com/thetangram/tangram)
 
 
 ## Current status
