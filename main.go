@@ -76,7 +76,7 @@ func main() {
 		}
 	}()
 
-	// deal with Ctrl+C (SIGTERM) and gracefull shutdown
+	// deal with Ctrl+C (SIGTERM) and graceful shutdown
 	c := make(chan os.Signal, 2)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	<-c
