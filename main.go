@@ -23,6 +23,9 @@ var (
 	server    http.Server
 )
 
+// Liveness check.
+// Used to verify if the application is running.
+// An application is healthy if status code is >= 200 && <400
 func healthy() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
@@ -30,14 +33,10 @@ func healthy() func(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Readiness check.
+// Used to verify if application is ready to serve client request.
+// An application is ready if status code is >= 200 && <400
 func ready() func(w http.ResponseWriter, r *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, "OK")
-	}
-}
-
-func alive() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, "OK")
@@ -66,10 +65,8 @@ func main() {
 
 	// configure HTTP server and register application status entrypoints
 	server := &http.Server{Addr: address()}
-
 	http.HandleFunc("/healthy", healthy())
 	http.HandleFunc("/ready", ready())
-	http.HandleFunc("/alive", alive())
 	go func() {
 		if err := server.ListenAndServe(); err != nil {
 			log.Printf("Httpserver: ListenAndServe() error: %s", err)
