@@ -29,7 +29,7 @@ build: fmt test
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _build
 
 install: build
-	@docker build --rm --build-arg version=$(version) -t docker-image .
+	@docker build --rm --build-arg version=$(version) -t $(docker-image) .
 
 deploy: install
 	@docker push docker-image
