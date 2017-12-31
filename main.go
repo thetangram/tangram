@@ -65,7 +65,7 @@ func printBanner() {
 	log.Printf("  build date: %s\n", buildDate)
 }
 
-func startHttpServer() *http.Server {
+func startHTTPServer() *http.Server {
 	// configure HTTP server and register application status entrypoints
 	server := &http.Server{Addr: address()}
 	http.HandleFunc("/healthy", healthy)
@@ -100,6 +100,6 @@ func gracefulShutdown(server *http.Server) {
 
 func main() {
 	printBanner()
-	server := startHttpServer()
+	server := startHTTPServer()
 	gracefulShutdown(server)
 }
