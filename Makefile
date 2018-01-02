@@ -51,8 +51,8 @@ _fmt:
 	@go fmt ./...
 
 _test:
-	@go vet
-	@go test
+	@go vet ./...
+	@go test ./...
 
 
 _build:
