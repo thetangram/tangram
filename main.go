@@ -29,7 +29,7 @@ var (
 // Liveness check.
 // Used to verify if the application is running.
 // An application is healthy if status code is >= 200 && <400
-func healthy(w http.ResponseWriter, r *http.Request) {
+func healthyHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-cache")
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, "OK")
@@ -38,7 +38,7 @@ func healthy(w http.ResponseWriter, r *http.Request) {
 // Readiness check.
 // Used to verify if application is ready to serve client request.
 // An application is ready if status code is >= 200 && <400
-func ready(w http.ResponseWriter, r *http.Request) {
+func readyHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-cache")
 	if isReady {
 		w.WriteHeader(http.StatusOK)
@@ -68,8 +68,8 @@ func printBanner() {
 func startHTTPServer() *http.Server {
 	// configure HTTP server and register application status entrypoints
 	server := &http.Server{Addr: address()}
-	http.HandleFunc("/healthy", healthy)
-	http.HandleFunc("/ready", ready)
+	http.HandleFunc("/healthy", healthyHandler)
+	http.HandleFunc("/ready", readyHandler)
 	go func() {
 		log.Printf("Listening on %s\n", address())
 		if err := server.ListenAndServe(); err != nil {
