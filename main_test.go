@@ -23,16 +23,15 @@ func TestHealthyHandler(t *testing.T) {
         be injected or mocked
 */
 func TestReadyHandler(t *testing.T) {
-    handlerSUT := readyHandler
-    r, _ := http.NewRequest("GET", "/ready", nil)
-    if err := handlerTester(r, handlerSUT, notReadyStatus); err != nil {
-        t.Errorf("ready handler error %v", err)
-    }
-    if err := handlerTester(r, handlerSUT, notReadyPayload); err != nil {
-        t.Errorf("ready handler error %v", err)
-    }
+	handlerSUT := readyHandler
+	r, _ := http.NewRequest("GET", "/ready", nil)
+	if err := handlerTester(r, handlerSUT, notReadyStatus); err != nil {
+		t.Errorf("ready handler error %v", err)
+	}
+	if err := handlerTester(r, handlerSUT, notReadyPayload); err != nil {
+		t.Errorf("ready handler error %v", err)
+	}
 }
-
 
 func healthyStatus(rr *httptest.ResponseRecorder) (err error) {
 	if status := rr.Code; status != http.StatusOK {
