@@ -43,10 +43,10 @@ func main() {
 // print application info
 func printBanner() {
 	log.Println("Tangram")
-	log.Printf("  version:       %s\n", version)
-	log.Printf("  build:         %s\n", build)
-	log.Printf("  build date:    %s\n", buildDate)
-	log.Printf("  starting time: %s\n", time.Now().Format(time.RFC3339))
+	log.Printf("  version:      %s\n", version)
+	log.Printf("  build:        %s\n", build)
+	log.Printf("  build date:   %s\n", buildDate)
+	log.Printf("  startup date: %s\n", time.Now().Format(time.RFC3339))
 }
 
 func startHTTPServer(c config.Config) *http.Server {
