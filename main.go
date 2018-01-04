@@ -1,3 +1,4 @@
+// The main package of Tangram product.
 package main
 
 import (
@@ -26,11 +27,10 @@ var (
 	isReady   = false
 )
 
-// Liveness check.
+// Healthy check handler.
 // Used to verify if the application is running.
-// An application is healthy if status code is >= 200 && <400
+// An application is healthy if its healthy status code is >= 200 && <400
 func healthyHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Cache-Control", "no-cache")
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, "OK")
 }
@@ -39,7 +39,6 @@ func healthyHandler(w http.ResponseWriter, r *http.Request) {
 // Used to verify if application is ready to serve client request.
 // An application is ready if status code is >= 200 && <400
 func readyHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Cache-Control", "no-cache")
 	if isReady {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, "OK")
@@ -57,12 +56,13 @@ func address() string {
 	return addr
 }
 
+// print application info
 func printBanner() {
-	// print application info
-	log.Printf("Tangram\n")
-	log.Printf("  version:    %s\n", version)
-	log.Printf("  build:      %s\n", build)
-	log.Printf("  build date: %s\n", buildDate)
+	log.Println("Tangram")
+	log.Printf("  version:       %s\n", version)
+	log.Printf("  build:         %s\n", build)
+	log.Printf("  build date:    %s\n", buildDate)
+	log.Printf("  starting time: %s\n", time.Now().Format(time.RFC3339))
 }
 
 func startHTTPServer() *http.Server {
