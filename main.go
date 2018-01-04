@@ -10,14 +10,16 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/thetangram/tangram/conf"
 )
 
 const (
-	defaultAddress  = ":8080"
 	shutdownTimeout = 5 * time.Second
 	// application exit status
 	successExitStatus            = 0
-	errorStopintServerStatusCode = 1
+	errorLoadingConfig           = 1
+	errorStopintServerStatusCode = 2
 )
 
 var (
@@ -29,7 +31,12 @@ var (
 
 func main() {
 	printBanner()
-	server := startHTTPServer()
+	conf, err := config.Load()
+	if err != nil {
+		log.Printf("Error loading configuration. Error: %v\n", err)
+		os.Exit(errorLoadingConfig)
+	}
+	server := startHTTPServer(conf)
 	waitAndShutdown(server)
 }
 
@@ -42,13 +49,13 @@ func printBanner() {
 	log.Printf("  starting time: %s\n", time.Now().Format(time.RFC3339))
 }
 
-func startHTTPServer() *http.Server {
+func startHTTPServer(c config.Config) *http.Server {
 	// configure HTTP server and register application status entrypoints
-	server := &http.Server{Addr: address()}
+	server := &http.Server{Addr: c.Address()}
 	http.HandleFunc("/healthy", healthyHandler)
 	http.HandleFunc("/ready", readyHandler)
 	go func() {
-		log.Printf("Listening on %s\n", address())
+		log.Printf("Listening on %s\n", c.Address())
 		if err := server.ListenAndServe(); err != nil {
 			log.Printf("Httpserver: ListenAndServe() error: %s", err)
 		}
@@ -94,12 +101,4 @@ func readyHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusServiceUnavailable)
 		fmt.Fprint(w, "NO")
 	}
-}
-
-func address() string {
-	addr := ":" + os.Getenv("PORT")
-	if addr == ":" {
-		addr = defaultAddress
-	}
-	return addr
 }
