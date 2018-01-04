@@ -30,7 +30,7 @@ var (
 func main() {
     printBanner()
     server := startHTTPServer()
-    gracefulShutdown(server)
+    waitAndShutdown(server)
 }
 
 // print application info
@@ -57,7 +57,7 @@ func startHTTPServer() *http.Server {
     return server
 }
 
-func gracefulShutdown(server *http.Server) {
+func waitAndShutdown(server *http.Server) {
     // deal with Ctrl+C (SIGTERM) and graceful shutdown
     stop := make(chan os.Signal, 1)
     signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
