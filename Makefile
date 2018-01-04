@@ -25,6 +25,9 @@ fmt:
 test:
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _test
 
+test-bench:
+	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _test-bench
+
 build: fmt test
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _build
 
@@ -54,6 +57,8 @@ _test:
 	@go vet ./...
 	@go test ./...
 
+_test-bench:
+	@go test -bench=. ./...
 
 _build:
 	@CGO_ENABLED=0 GOOS=linux go build -v \

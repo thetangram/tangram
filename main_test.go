@@ -33,6 +33,21 @@ func TestReadyHandler(t *testing.T) {
 	}
 }
 
+func BenchmarkReadyHandler(b *testing.B) {
+	r, _ := http.NewRequest("GET", "/ready", nil)
+	for i:=0; i<b.N;i++ {
+		handlerTester(r, readyHandler, func(rr *httptest.ResponseRecorder) (err error) { return nil })
+	}
+}
+
+func BenchmarkHealthyHandler(b *testing.B) {
+	r, _ := http.NewRequest("GET", "/ready", nil)
+	for i:=0; i<b.N;i++ {
+		handlerTester(r, healthyHandler, func(rr *httptest.ResponseRecorder) (err error) { return nil })
+
+	}
+}
+
 func healthyStatus(rr *httptest.ResponseRecorder) (err error) {
 	if status := rr.Code; status != http.StatusOK {
 		return fmt.Errorf("healthy handler returned wrong status code: got %v want %v", status, http.StatusOK)
