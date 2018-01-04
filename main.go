@@ -27,6 +27,54 @@ var (
 	isReady   = false
 )
 
+func main() {
+    printBanner()
+    server := startHTTPServer()
+    gracefulShutdown(server)
+}
+
+// print application info
+func printBanner() {
+    log.Println("Tangram")
+    log.Printf("  version:       %s\n", version)
+    log.Printf("  build:         %s\n", build)
+    log.Printf("  build date:    %s\n", buildDate)
+    log.Printf("  starting time: %s\n", time.Now().Format(time.RFC3339))
+}
+
+func startHTTPServer() *http.Server {
+    // configure HTTP server and register application status entrypoints
+    server := &http.Server{Addr: address()}
+    http.HandleFunc("/healthy", healthyHandler)
+    http.HandleFunc("/ready", readyHandler)
+    go func() {
+        log.Printf("Listening on %s\n", address())
+        if err := server.ListenAndServe(); err != nil {
+            log.Printf("Httpserver: ListenAndServe() error: %s", err)
+        }
+    }()
+    isReady = true
+    return server
+}
+
+func gracefulShutdown(server *http.Server) {
+    // deal with Ctrl+C (SIGTERM) and graceful shutdown
+    stop := make(chan os.Signal, 1)
+    signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
+    <-stop
+    isReady = false
+    ctx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
+    defer cancel()
+    log.Printf("Shutting down, with a timeout of %s.\n", shutdownTimeout)
+    if err := server.Shutdown(ctx); err != nil {
+        log.Printf("Error stopping http server. Error: %v\n", err)
+        os.Exit(errorStopintServerStatusCode)
+    } else {
+        log.Println("Tangram server stoped")
+        os.Exit(successExitStatus)
+    }
+}
+
 // Healthy check handler.
 // Used to verify if the application is running.
 // An application is healthy if its healthy status code is >= 200 && <400
@@ -54,52 +102,4 @@ func address() string {
 		addr = defaultAddress
 	}
 	return addr
-}
-
-// print application info
-func printBanner() {
-	log.Println("Tangram")
-	log.Printf("  version:       %s\n", version)
-	log.Printf("  build:         %s\n", build)
-	log.Printf("  build date:    %s\n", buildDate)
-	log.Printf("  starting time: %s\n", time.Now().Format(time.RFC3339))
-}
-
-func startHTTPServer() *http.Server {
-	// configure HTTP server and register application status entrypoints
-	server := &http.Server{Addr: address()}
-	http.HandleFunc("/healthy", healthyHandler)
-	http.HandleFunc("/ready", readyHandler)
-	go func() {
-		log.Printf("Listening on %s\n", address())
-		if err := server.ListenAndServe(); err != nil {
-			log.Printf("Httpserver: ListenAndServe() error: %s", err)
-		}
-	}()
-	isReady = true
-	return server
-}
-
-func gracefulShutdown(server *http.Server) {
-	// deal with Ctrl+C (SIGTERM) and graceful shutdown
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
-	<-stop
-	isReady = false
-	ctx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
-	defer cancel()
-	log.Printf("Shutting down, with a timeout of %s.\n", shutdownTimeout)
-	if err := server.Shutdown(ctx); err != nil {
-		log.Printf("Error stopping http server. Error: %v\n", err)
-		os.Exit(errorStopintServerStatusCode)
-	} else {
-		log.Println("Tangram server stoped")
-		os.Exit(successExitStatus)
-	}
-}
-
-func main() {
-	printBanner()
-	server := startHTTPServer()
-	gracefulShutdown(server)
 }
