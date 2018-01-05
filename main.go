@@ -16,8 +16,7 @@ import (
 )
 
 const (
-	shutdownTimeout = 5 * time.Second
-	// application exit status
+	// application exit statuses
 	successExitStatus            = 0
 	errorLoadingConfig           = 1
 	errorStopintServerStatusCode = 2
@@ -32,13 +31,13 @@ var (
 
 func main() {
 	printBanner()
-	conf, err := config.Load()
+	conf, err := conf.Load()
 	if err != nil {
 		log.Printf("Error loading configuration. Error: %v\n", err)
 		os.Exit(errorLoadingConfig)
 	}
 	server := startHTTPServer(conf)
-	waitAndShutdown(server)
+	waitAndShutdown(server, conf.ShutdownTimeout())
 }
 
 // print application info
@@ -50,7 +49,7 @@ func printBanner() {
 	log.Printf("  startup date: %s\n", time.Now().Format(time.RFC3339))
 }
 
-func startHTTPServer(c config.Config) *http.Server {
+func startHTTPServer(c conf.Config) *http.Server {
 	// configure HTTP server and register application status entrypoints
 	server := &http.Server{Addr: c.Address()}
 	http.HandleFunc("/healthy", healthyHandler)
@@ -58,22 +57,22 @@ func startHTTPServer(c config.Config) *http.Server {
 	go func() {
 		log.Printf("Listening on %s\n", c.Address())
 		if err := server.ListenAndServe(); err != nil {
-			log.Printf("Httpserver: ListenAndServe() error: %s", err)
+			log.Printf("Cannot start HTTP server. Error: %s", err)
 		}
 	}()
 	isReady = true
 	return server
 }
 
-func waitAndShutdown(server *http.Server) {
+func waitAndShutdown(server *http.Server, timeout time.Duration) {
 	// deal with Ctrl+C (SIGTERM) and graceful shutdown
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
 	<-stop
 	isReady = false
-	ctx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
-	log.Printf("Shutting down, with a timeout of %s.\n", shutdownTimeout)
+	log.Printf("Shutting down, with a timeout of %s.\n", timeout)
 	if err := server.Shutdown(ctx); err != nil {
 		log.Printf("Error stopping http server. Error: %v\n", err)
 		os.Exit(errorStopintServerStatusCode)

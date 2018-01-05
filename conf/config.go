@@ -2,31 +2,38 @@
 // The configuration values will be loaded from command arguments,
 // config file, environment variables and default values.
 // The prevalence order is (more to less prevalence):
-//   - command arguments
-//   - config file
-//   - environment
-//   - default values
-package config
+// - command arguments
+// - config file
+// - environment
+// - default values
+package conf
 
 import (
 	"os"
+	"strconv"
+	"time"
 )
 
 const (
 	defaultConfigFile = "tangram.toml"
-	// defaults
-	defaultAddress = ":2018"
 )
 
 // Config contains application configuration
 type Config struct {
-	addr string
+	addr            string
+	shutdownTimeout time.Duration
 }
 
 // Address returns the HTTP server address.
 // This format have the format "[inet-address]:port"
 func (c Config) Address() string {
 	return c.addr
+}
+
+// ShutdownTimeout returns the application shutdown timeout to wait to
+// shutdown the HTTP server for graceful shutdown
+func (c Config) ShutdownTimeout() time.Duration {
+	return c.shutdownTimeout
 }
 
 // Load applcation configuration from default config file
@@ -36,7 +43,8 @@ func Load() (c Config, err error) {
 
 func loadConfig(file string) (c Config, err error) {
 	c = Config{}
-	c.addr = confValue("address", "server.address", "ADDRESS", defaultAddress)
+	c.addr = confValue(confDefs["address"])
+	c.shutdownTimeout = asDuration(confValue(confDefs["shutdownTimeout"]))
 	return
 }
 
@@ -46,9 +54,14 @@ func loadConfig(file string) (c Config, err error) {
 // - conf: the name of configuration value in configuration file
 // - env: the name of configuration value in the environment
 // - def: the default value
-func confValue(arg string, conf string, env string, def string) string {
-	if value, exist := os.LookupEnv(env); exist {
+func confValue(conf configDef) string {
+	if value, exist := os.LookupEnv(conf.env); exist {
 		return value
 	}
-	return def
+	return conf.def
+}
+
+func asDuration(val string) time.Duration {
+	duration, _ := strconv.Atoi(val)
+	return time.Duration(duration) * time.Second
 }
