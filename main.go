@@ -1,4 +1,4 @@
-// Package main provides de application entry point (main) and the 
+// Package main provides de application entry point (main) and the
 // procedures related to application life cycle.
 package main
 

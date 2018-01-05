@@ -9,7 +9,7 @@
 package config
 
 import (
-    "os"
+	"os"
 )
 
 const (
@@ -42,13 +42,13 @@ func loadConfig(file string) (c Config, err error) {
 
 // confValue returns a configuration value from best-fit source.
 // Parameters:
-// - arg: the name of configuration value in the command line argument 
-// - conf: the name of configuration value in configuration file 
-// - env: the name of configuration value in the environment 
-// - def: the default value 
+// - arg: the name of configuration value in the command line argument
+// - conf: the name of configuration value in configuration file
+// - env: the name of configuration value in the environment
+// - def: the default value
 func confValue(arg string, conf string, env string, def string) string {
-    if value, exist := os.LookupEnv(env); exist {
-        return value
-    }
-    return def
+	if value, exist := os.LookupEnv(env); exist {
+		return value
+	}
+	return def
 }
