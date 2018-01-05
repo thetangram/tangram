@@ -32,7 +32,8 @@ The project targets are:
   - ```dependencies```: Update project dependencies.
   - ```clean```: Clean all project artifacts
   - ```fmt```: Formats the code
-  - ```test```: Run unit test
+  - ```test```: Runs unit tests
+  - ```benchmark```: Runs benchmark tests
   - ```build``` (depends on ```fmt``` and ```test```): Compiles the project and generates a full independent Linux binary artifact. 
   - ```install``` (depends on ```build```): Pending. Build the Docker container image.
   - ```deploy``` (depends on ```install```): Pending. Publish the Docker container image to registry.

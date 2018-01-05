@@ -25,7 +25,7 @@ fmt:
 test:
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _test
 
-test-bench:
+benchmark:
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _test-bench
 
 build: fmt test
