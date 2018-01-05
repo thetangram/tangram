@@ -1,4 +1,4 @@
-// Package config models the application configuration.
+// Package conf models the application configuration.
 // The configuration values will be loaded from command arguments,
 // config file, environment variables and default values.
 // The prevalence order is (more to less prevalence):
