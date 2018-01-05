@@ -1,4 +1,4 @@
-// Deal with application configuration.
+// Package config models the application configuration.
 // The configuration values will be loaded from command arguments,
 // config file, environment variables and default values.
 // The prevalence order is (more to less prevalence):
@@ -14,16 +14,18 @@ const (
 	defaultAddress = ":2018"
 )
 
+// Config contains application configuration
 type Config struct {
 	addr string
 }
 
-// get the HTTP server address
+// Address returns the HTTP server address.
+// This format have the format "[inet-address]:port"
 func (c Config) Address() string {
 	return c.addr
 }
 
-// Loads applcation configuration from default config file
+// Load applcation configuration from default config file
 func Load() (c Config, err error) {
 	return loadConfig(defaultConfigFile)
 }

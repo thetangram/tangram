@@ -1,4 +1,5 @@
-// The main package of Tangram product.
+// Package main provides de application entry point (main) and the 
+// procedures related to application life cycle.
 package main
 
 import (
