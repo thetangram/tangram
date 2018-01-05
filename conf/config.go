@@ -1,7 +1,7 @@
 // Package conf models the application configuration.
-// The configuration values will be loaded from command arguments,
+// The configuration values will be loaded from command line arguments,
 // config file, environment variables and default values.
-// The prevalence order is (more to less prevalence):
+// The order is (more to less prevalence):
 // - command arguments
 // - config file
 // - environment
@@ -24,19 +24,19 @@ type Config struct {
 	shutdownTimeout time.Duration
 }
 
-// Address returns the HTTP server address.
-// This format have the format "[inet-address]:port"
+// Address gets the HTTP server address.
+// The format is "[inet-address]:port"
 func (c Config) Address() string {
 	return c.addr
 }
 
-// ShutdownTimeout returns the application shutdown timeout to wait to
-// shutdown the HTTP server for graceful shutdown
+// ShutdownTimeout gets the application shutdown timeout to wait to
+// shutdown the HTTP server, for application graceful shutdown.
 func (c Config) ShutdownTimeout() time.Duration {
 	return c.shutdownTimeout
 }
 
-// Load applcation configuration from default config file
+// Load application configuration from default config file
 func Load() (c Config, err error) {
 	return loadConfig(defaultConfigFile)
 }
@@ -48,13 +48,15 @@ func loadConfig(file string) (c Config, err error) {
 	return
 }
 
-// confValue returns a configuration value from best-fit source.
+// confValue returns a configuration value from best-fit configuration
+// sources.
 // Parameters:
 // - arg: the name of configuration value in the command line argument
 // - conf: the name of configuration value in configuration file
 // - env: the name of configuration value in the environment
 // - def: the default value
 func confValue(conf configDef) string {
+	// TODO get from command line and config file
 	if value, exist := os.LookupEnv(conf.env); exist {
 		return value
 	}
