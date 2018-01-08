@@ -23,7 +23,7 @@ type Config struct {
 	shutdownTimeout time.Duration
 }
 
-// Load application configuration from default config file
+// Load application configuration
 func Load() (c Config, err error) {
 	c = Config{
 		addr:            defaultAddress,
