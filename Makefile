@@ -4,7 +4,7 @@ user="$(shell id -u):$(shell id -g)"
 build=$(shell git rev-parse --short HEAD)
 buildDate=$(shell date --rfc-3339=seconds)
 targetDir=/go/src/github.com/thetangram/tangram
-docker-image=tangram:$(version)
+docker-image=tangram
 
 
 compile:
@@ -32,10 +32,12 @@ build: fmt test
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _build
 
 install: build
-	@docker build --rm --build-arg version=$(version) -t $(docker-image) .
+	@docker build --rm --build-arg version=$(version) -t "$(docker-image):$(version)" .
+	@docker tag "$(docker-image):$(version)" "$(docker-image):latest"
 
 deploy: install
-	@docker push docker-image
+	@docker push $(docker-image):$(version)
+
 
 
 _compile:
