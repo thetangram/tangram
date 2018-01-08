@@ -12,7 +12,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/thetangram/tangram/conf"
+	"github.com/thetangram/tangram/pkg/conf"
 )
 
 const (

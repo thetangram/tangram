@@ -4,7 +4,7 @@ LABEL name="Tangram" \
       version="$version" \
       description="Tangram, an edge-side html composition service"
 
-ADD tangram /usr/local/tangram/
+ADD dist/tangram /usr/local/tangram/
 
 WORKDIR /usr/local/tangram/
 

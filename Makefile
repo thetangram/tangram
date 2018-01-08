@@ -39,7 +39,7 @@ deploy: install
 
 
 _compile:
-	@go build -v
+	@go build -v -o dist/tangram cmd/tangram/main.go
 
 _init-dependencies:
 	@dep init -v
@@ -48,7 +48,7 @@ _dependencies:
 	@dep ensure -update
 
 _clean:
-	@go clean
+	@rm -rf dist/
 
 _fmt:
 	@go fmt ./...
@@ -61,9 +61,10 @@ _test-bench:
 	@go test -bench=. ./...
 
 _build:
-	@CGO_ENABLED=0 GOOS=linux go build -v \
-	                                   -a -installsuffix cgo \
+	@CGO_ENABLED=0 GOOS=linux go build -v -a -installsuffix cgo \
 	                                   -ldflags "-s -w \
 	                                             -X 'main.version=$(version)' \
 	                                             -X 'main.build=$(build)' \
-	                                             -X 'main.buildDate=$(buildDate)'" 
+	                                             -X 'main.buildDate=$(buildDate)'"  \
+	                                   -o dist/tangram \
+									   cmd/tangram/main.go
