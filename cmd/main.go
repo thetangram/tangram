@@ -51,7 +51,11 @@ func printBanner() {
 
 func startHTTPServer(c conf.Config) *http.Server {
 	// configure HTTP server and register application status entrypoints
-	server := &http.Server{Addr: c.Address()}
+	server := &http.Server{
+		Addr:         c.Address(),
+		ReadTimeout:  c.HTTPReadTimeout(),
+		WriteTimeout: c.HTTPWriteTimeout(),
+	}
 	http.HandleFunc("/healthy", healthyHandler)
 	http.HandleFunc("/ready", readyHandler)
 	go func() {

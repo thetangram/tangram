@@ -14,7 +14,17 @@ import (
 
 // Config contains application configuration
 type Config struct {
-	addr            string
+	addr   string
+	http   http
+	system system
+}
+
+type http struct {
+	readTimeout  time.Duration
+	writeTimeout time.Duration
+}
+
+type system struct {
 	shutdownTimeout time.Duration
 }
 
@@ -33,5 +43,17 @@ func (c Config) Address() string {
 // ShutdownTimeout gets the application shutdown timeout to wait to
 // shutdown the HTTP server, for application graceful shutdown.
 func (c Config) ShutdownTimeout() time.Duration {
-	return c.shutdownTimeout
+	return c.system.shutdownTimeout
+}
+
+// HTTPReadTimeout is the
+// See also https://golang.org/pkg/net/http/#Server ReadTimeout field
+func (c Config) HTTPReadTimeout() time.Duration {
+	return c.http.readTimeout
+}
+
+// HTTPWriteTimeout is the
+// See also https://golang.org/pkg/net/http/#Server WriteTimeout field
+func (c Config) HTTPWriteTimeout() time.Duration {
+	return c.http.writeTimeout
 }
