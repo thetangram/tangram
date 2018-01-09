@@ -12,11 +12,6 @@ import (
 	"time"
 )
 
-const (
-	defaultAddress         = ":2018"
-	defaultShutdownTimeout = 5 * time.Second
-)
-
 // Config contains application configuration
 type Config struct {
 	addr            string
@@ -25,9 +20,7 @@ type Config struct {
 
 // Load application configuration
 func Load() (c Config, err error) {
-	c = Config{
-		addr:            defaultAddress,
-		shutdownTimeout: defaultShutdownTimeout}
+	c, _ = defaults()
 	return
 }
 
