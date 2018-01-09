@@ -72,8 +72,8 @@ $ ./dist/tangram
 
 To run the Docker image:
 
-`
+```
 $ docker run -ti -p 2018:2018 tangram
-` 
+```
 
 The service exposes *liveness* and *readiness* health checks. You can access from command line (```curl http://localhost:2018/healthy``` or ```curl http://localhost:2018/ready```) of from a browser (```xdg-open http://localhost:2018/healthy``` or ```xdg-open http://localhost:2018/ready```).
