@@ -46,7 +46,7 @@ func (c Config) ShutdownTimeout() time.Duration {
 	return c.system.shutdownTimeout
 }
 
-// HTTPReadTimeout is the maximum duration for reading the entire request, 
+// HTTPReadTimeout is the maximum duration for reading the entire request,
 // including the body.
 // See also https://golang.org/pkg/net/http/#Server ReadTimeout field
 func (c Config) HTTPReadTimeout() time.Duration {
@@ -54,7 +54,7 @@ func (c Config) HTTPReadTimeout() time.Duration {
 }
 
 // HTTPWriteTimeout is the maximum duration before timing out writes of
-// the response. 
+// the response.
 // See also https://golang.org/pkg/net/http/#Server WriteTimeout field
 func (c Config) HTTPWriteTimeout() time.Duration {
 	return c.http.writeTimeout
