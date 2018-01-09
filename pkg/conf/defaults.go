@@ -11,6 +11,7 @@ const (
 	defaultSystemShutdownTimeout = 5 * time.Second
 )
 
+// Defaults creates a conf instance with default values
 func defaults() (c Config, err error) {
 	c = Config{
 		addr: defaultAddress,
