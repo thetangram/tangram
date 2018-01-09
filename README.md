@@ -16,13 +16,16 @@
   - [Docker](https://www.docker.com/) as container engine.
 
 
-### Build
+### Build & Run
 
 TL:DR
 
 ```
-$ make 
+$ make build 
+$ ./dist/tangram
 ``` 
+
+#### Building
 
 This project uses ```make``` as build automation tool, so, all building project task are defined in ```Makefile```.
 
@@ -35,8 +38,8 @@ The project targets are:
   - ```test```: Runs unit tests
   - ```benchmark```: Runs benchmark tests
   - ```build``` (depends on ```fmt``` and ```test```): Compiles the project and generates a full independent Linux binary artifact. 
-  - ```install``` (depends on ```build```): Pending. Build the Docker container image.
-  - ```deploy``` (depends on ```install```): Pending. Publish the Docker container image to registry.
+  - ```install``` (depends on ```build```): Build the Docker container image.
+  - ```deploy``` (depends on ```install```): Publish the Docker container image to registry.
 
 For example, to compile project while working: 
 
@@ -44,8 +47,33 @@ For example, to compile project while working:
 $ make 
 ``` 
 
-To generate the final binary artifact:
+To generate the final Linux full independent binary artifact:
 
 ```
 $ make clean build 
 ``` 
+
+Also you can generate a Docker image:
+
+```
+$ make install 
+``` 
+
+
+#### Running
+
+You can run the binary artifact or the Docker container.
+
+To run the binary:
+
+```
+$ ./dist/tangram
+``` 
+
+To run the Docker image:
+
+`
+$ docker run -ti -p 2018:2018 tangram
+` 
+
+The service exposes *liveness* and *readiness* health checks. You can access from command line (```curl http://localhost:2018/healthy``` or ```curl http://localhost:2018/ready```) of from a browser (```xdg-open http://localhost:2018/healthy``` or ```xdg-open http://localhost:2018/ready```).
