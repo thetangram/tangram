@@ -17,6 +17,8 @@ All configuration attributes are optional. If not defined the default value wiil
 
 ## Configuration file
 
+An example of configuration file, with all fields configured, and two routes.
+
 ```yaml
 address: ":2018"
 readTimeout: 200ms
