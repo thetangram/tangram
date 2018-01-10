@@ -18,6 +18,14 @@ type Config struct {
 	readTimeout     time.Duration
 	writeTimeout    time.Duration
 	shutdownTimeout time.Duration
+	routes          []Route
+}
+
+// Route is a service routing configuration
+type Route struct {
+	path    string
+	url     string
+	timeout time.Duration
 }
 
 // Load application configuration
