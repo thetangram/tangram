@@ -1,7 +1,7 @@
 # Tag definition
 
 
-# Component holder tag
+## Component holder tag
 
 ```html
 <tag data-src=[url] 
@@ -48,7 +48,7 @@ a default fallback
 ```
 
 
-# Component definition tag
+## Component definition tag
 
 <div data-name=[string]>
     <!-- Here the component content -->
