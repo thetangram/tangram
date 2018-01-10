@@ -50,6 +50,12 @@ a default fallback
 
 ## Component definition tag
 
+```html
 <div data-name=[string]>
     <!-- Here the component content -->
 </div> 
+```
+
+| Attribute | Optional | Default | description                                   |
+| ----------|:--------:|:--------|:----------------------------------------------|
+| data-name | yes      |         | The component name. Must be unike for every component. |
