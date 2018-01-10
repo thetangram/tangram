@@ -1,7 +1,5 @@
 # Tag definition
 
-
-
 ## Component holder tag
 
 ```html
@@ -39,6 +37,7 @@ a default fallback:
 
 ```html
 <section data-src=https://github.com/thetangram/sample-components/component1
+         data-name=component-name
          data-timeout=1s
          data-headers-filter=[Authorization] 
          data-cookie-filter=[jsessionid] 
@@ -66,7 +65,7 @@ a default fallback:
 
 ### Examples
 
-Define a component to be used in the *holder tag* sample
+Define a component to be used in the *holder tag* examples:
 
 ```html
 <div data-name=root>
@@ -77,7 +76,7 @@ Define a component to be used in the *holder tag* sample
 </div> 
 ```
 
-Another example, with a component acting as holder for three components
+Another example, with a component as holder for HTML content and three components
 
 ```html
 <div data-name=root>
