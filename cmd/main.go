@@ -53,8 +53,8 @@ func startHTTPServer(c conf.Config) *http.Server {
 	// configure HTTP server and register application status entrypoints
 	server := &http.Server{
 		Addr:         c.Address(),
-		ReadTimeout:  c.HTTPReadTimeout(),
-		WriteTimeout: c.HTTPWriteTimeout(),
+		ReadTimeout:  c.ReadTimeout(),
+		WriteTimeout: c.WriteTimeout(),
 	}
 	http.HandleFunc("/healthy", healthyHandler)
 	http.HandleFunc("/ready", readyHandler)

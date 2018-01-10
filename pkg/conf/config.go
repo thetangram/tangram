@@ -32,22 +32,22 @@ func (c Config) Address() string {
 	return c.addr
 }
 
-// ShutdownTimeout gets the application shutdown timeout to wait to
-// shutdown the HTTP server, for application graceful shutdown.
-func (c Config) ShutdownTimeout() time.Duration {
-	return c.shutdownTimeout
-}
-
 // HTTPReadTimeout is the maximum duration for reading the entire request,
 // including the body.
 // See also https://golang.org/pkg/net/http/#Server ReadTimeout field
-func (c Config) HTTPReadTimeout() time.Duration {
+func (c Config) ReadTimeout() time.Duration {
 	return c.readTimeout
 }
 
 // HTTPWriteTimeout is the maximum duration before timing out writes of
 // the response.
 // See also https://golang.org/pkg/net/http/#Server WriteTimeout field
-func (c Config) HTTPWriteTimeout() time.Duration {
+func (c Config) WriteTimeout() time.Duration {
 	return c.writeTimeout
+}
+
+// ShutdownTimeout gets the application shutdown timeout to wait to
+// shutdown the HTTP server, for application graceful shutdown.
+func (c Config) ShutdownTimeout() time.Duration {
+	return c.shutdownTimeout
 }
