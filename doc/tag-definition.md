@@ -32,7 +32,7 @@ A simple use case, with default values and no fallback content:
 ```html
 <section data-src=https://github.com/thetangram/sample-components/component1>
 </section> 
-
+```
 
 A more complex use case, defining the timeout, header filters and ttl, and with 
 a default fallback:
