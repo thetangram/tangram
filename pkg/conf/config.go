@@ -14,12 +14,12 @@ import (
 
 // Config contains application configuration
 type Config struct {
-	addr   string
 	http   http
 	system system
 }
 
 type http struct {
+	addr         string
 	readTimeout  time.Duration
 	writeTimeout time.Duration
 }
@@ -37,7 +37,7 @@ func Load() (c Config, err error) {
 // Address gets the HTTP server address.
 // The format is "[inet-address]:port"
 func (c Config) Address() string {
-	return c.addr
+	return c.http.addr
 }
 
 // ShutdownTimeout gets the application shutdown timeout to wait to
