@@ -14,14 +14,10 @@ const (
 // Defaults creates a conf instance with default values
 func defaults() (c Config, err error) {
 	c = Config{
-		http: http{
-			addr:         defaultAddress,
-			readTimeout:  defaultHTTPReadTimeout,
-			writeTimeout: defaultHTTPWriteTimeout,
-		},
-		system: system{
-			shutdownTimeout: defaultSystemShutdownTimeout,
-		},
+		addr:            defaultAddress,
+		readTimeout:     defaultHTTPReadTimeout,
+		writeTimeout:    defaultHTTPWriteTimeout,
+		shutdownTimeout: defaultSystemShutdownTimeout,
 	}
 	return
 }

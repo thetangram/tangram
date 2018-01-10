@@ -14,17 +14,9 @@ import (
 
 // Config contains application configuration
 type Config struct {
-	http   http
-	system system
-}
-
-type http struct {
-	addr         string
-	readTimeout  time.Duration
-	writeTimeout time.Duration
-}
-
-type system struct {
+	addr            string
+	readTimeout     time.Duration
+	writeTimeout    time.Duration
 	shutdownTimeout time.Duration
 }
 
@@ -37,25 +29,25 @@ func Load() (c Config, err error) {
 // Address gets the HTTP server address.
 // The format is "[inet-address]:port"
 func (c Config) Address() string {
-	return c.http.addr
+	return c.addr
 }
 
 // ShutdownTimeout gets the application shutdown timeout to wait to
 // shutdown the HTTP server, for application graceful shutdown.
 func (c Config) ShutdownTimeout() time.Duration {
-	return c.system.shutdownTimeout
+	return c.shutdownTimeout
 }
 
 // HTTPReadTimeout is the maximum duration for reading the entire request,
 // including the body.
 // See also https://golang.org/pkg/net/http/#Server ReadTimeout field
 func (c Config) HTTPReadTimeout() time.Duration {
-	return c.http.readTimeout
+	return c.readTimeout
 }
 
 // HTTPWriteTimeout is the maximum duration before timing out writes of
 // the response.
 // See also https://golang.org/pkg/net/http/#Server WriteTimeout field
 func (c Config) HTTPWriteTimeout() time.Duration {
-	return c.http.writeTimeout
+	return c.writeTimeout
 }
