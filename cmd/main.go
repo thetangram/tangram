@@ -12,7 +12,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/cemugo/tangram/pkg/conf"
+	"github.com/thetangram/tangram/pkg/conf"
 )
 
 const (
@@ -66,8 +66,6 @@ func startHTTPServer(c conf.Config) *http.Server {
 	}()
 	isReady = true
 	return server
-
-	//Test forking
 }
 
 func waitAndShutdown(server *http.Server, timeout time.Duration) {
@@ -107,4 +105,6 @@ func readyHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusServiceUnavailable)
 		fmt.Fprint(w, "NO")
 	}
+
+	//Test
 }
