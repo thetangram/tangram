@@ -40,14 +40,14 @@ func (c Config) Address() string {
 	return c.addr
 }
 
-// HTTPReadTimeout is the maximum duration for reading the entire request,
+// ReadTimeout is the maximum duration for reading the entire request,
 // including the body.
 // See also https://golang.org/pkg/net/http/#Server ReadTimeout field
 func (c Config) ReadTimeout() time.Duration {
 	return c.readTimeout
 }
 
-// HTTPWriteTimeout is the maximum duration before timing out writes of
+// WriteTimeout is the maximum duration before timing out writes of
 // the response.
 // See also https://golang.org/pkg/net/http/#Server WriteTimeout field
 func (c Config) WriteTimeout() time.Duration {
