@@ -59,3 +59,18 @@ func (c Config) WriteTimeout() time.Duration {
 func (c Config) ShutdownTimeout() time.Duration {
 	return c.shutdownTimeout
 }
+
+// Path is the path Tangram routes to a service
+func (r Route) Path() string {
+	return r.path
+}
+
+// URL is the target address of a route
+func (r Route) URL() string {
+	return r.url
+}
+
+// Timeout is the max. time to perform request to service
+func (r Route) Timeout() time.Duration {
+	return r.timeout
+}
