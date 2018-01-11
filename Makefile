@@ -63,7 +63,8 @@ _test-bench:
 	@go test -bench=. ./...
 
 _build:
-	@CGO_ENABLED=0 GOOS=linux go build -v -a -installsuffix cgo \
+	@CGO_ENABLED=0 GOOS=linux go build -a \
+									   -installsuffix cgo \
 	                                   -ldflags "-s -w \
 	                                             -X 'main.version=$(version)' \
 	                                             -X 'main.build=$(build)' \
