@@ -77,6 +77,29 @@ func TestToConfig(t *testing.T) {
 	}
 }
 
+// TestToRoutes check that a ConfigYAML routes array is adapted to Config routes array
+func TestToRoutes(t *testing.T) {
+	configYAML := ConfigYAML{
+		Routes: []RouteYAML{
+			RouteYAML{
+				Path:    "/path",
+				URL:     "http://domain.com/path/to/component",
+				Timeout: 3 * time.Second,
+			},
+			RouteYAML{
+				Path:    "/path",
+				URL:     "http://domain.com/path/to/component",
+				Timeout: 3 * time.Second,
+			},
+		},
+	}
+
+	r := configYAML.toRoutes()
+	if len(r) != 2 {
+		t.Fatalf("error parsing routes: Expected: [%v], Returned: [%v]\n", 2, len(r))
+	}
+}
+
 // TestToRoute check that a yaml route structure is adapted to Route
 func TestToRoute(t *testing.T) {
 	routeYAML := RouteYAML{
@@ -87,12 +110,12 @@ func TestToRoute(t *testing.T) {
 
 	r := routeYAML.toRoute()
 	if r.path != routeYAML.Path {
-		t.Fatalf("error parsing address: Expected: [%v], Returned: [%v]\n", routeYAML.Path, r.path)
+		t.Fatalf("error parsing path: Expected: [%v], Returned: [%v]\n", routeYAML.Path, r.path)
 	}
 	if r.url != routeYAML.URL {
-		t.Fatalf("error parsing address: Expected: [%v], Returned: [%v]\n", routeYAML.URL, r.url)
+		t.Fatalf("error parsing url: Expected: [%v], Returned: [%v]\n", routeYAML.URL, r.url)
 	}
 	if r.timeout != routeYAML.Timeout {
-		t.Fatalf("error parsing address: Expected: [%v], Returned: [%v]\n", routeYAML.Timeout, r.timeout)
+		t.Fatalf("error parsing timeout: Expected: [%v], Returned: [%v]\n", routeYAML.Timeout, r.timeout)
 	}
 }
