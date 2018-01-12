@@ -23,15 +23,17 @@ routes:
 
 // TestConfigFile check that a yaml structure can be unmarshaled
 func TestUnmarshal(t *testing.T) {
+	// expects
 	address := ":2018"
 	readTimeout := 5 * time.Second
 	writeTimeout := 5 * time.Second
 	shutdownTimeout := 20 * time.Second
 	routes := 2
 	routeOnePath := "/one"
-
+	// sut
 	c := ConfigYAML{}
 	err := c.unmarshal(yamlContent)
+	// assertions
 	if err != nil {
 		t.Fatalf("error: %v", err)
 	}
@@ -57,12 +59,14 @@ func TestUnmarshal(t *testing.T) {
 
 // TestConfigFile check that a yaml structure can be unmarshaled
 func TestToConfig(t *testing.T) {
+	// sut
 	configYAML := ConfigYAML{
 		Addr:         ":2017",
 		ReadTimeout:  2 * time.Second,
 		WriteTimeout: 1 * time.Second,
 	}
 	c, err := configYAML.toConfig()
+	// assertions
 	if err != nil {
 		t.Fatalf("error: %v", err)
 	}
@@ -79,6 +83,7 @@ func TestToConfig(t *testing.T) {
 
 // TestToRoutes check that a ConfigYAML routes array is adapted to Config routes array
 func TestToRoutes(t *testing.T) {
+	// sut
 	configYAML := ConfigYAML{
 		Routes: []RouteYAML{
 			RouteYAML{
@@ -93,8 +98,9 @@ func TestToRoutes(t *testing.T) {
 			},
 		},
 	}
-
+	// assertions
 	r := configYAML.toRoutes()
+	//
 	if len(r) != 2 {
 		t.Fatalf("error parsing routes: Expected: [%v], Returned: [%v]\n", 2, len(r))
 	}
@@ -102,13 +108,14 @@ func TestToRoutes(t *testing.T) {
 
 // TestToRoute check that a yaml route structure is adapted to Route
 func TestToRoute(t *testing.T) {
+	// sut
 	routeYAML := RouteYAML{
 		Path:    "/path",
 		URL:     "http://domain.com/path/to/component",
 		Timeout: 3 * time.Second,
 	}
-
 	r := routeYAML.toRoute()
+	// assertions
 	if r.path != routeYAML.Path {
 		t.Fatalf("error parsing path: Expected: [%v], Returned: [%v]\n", routeYAML.Path, r.path)
 	}
