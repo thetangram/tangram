@@ -40,19 +40,19 @@ func (c *ConfigYAML) unmarshal(b []byte) (err error) {
 	return
 }
 
-func (conf *ConfigYAML) toConfig() (c Config, err error) {
-	c.addr = conf.Addr
-	c.readTimeout = conf.ReadTimeout
-	c.writeTimeout = conf.WriteTimeout
-	c.shutdownTimeout = conf.ShutdownTimeout
-	c.routes = conf.toRoutes()
+func (c *ConfigYAML) toConfig() (conf Config, err error) {
+	conf.addr = c.Addr
+	conf.readTimeout = c.ReadTimeout
+	conf.writeTimeout = c.WriteTimeout
+	conf.shutdownTimeout = c.ShutdownTimeout
+	conf.routes = c.toRoutes()
 	return
 }
 
-func (conf *ConfigYAML) toRoutes() (r []Route) {
-	r = make([]Route, len(conf.Routes))
+func (c *ConfigYAML) toRoutes() (r []Route) {
+	r = make([]Route, len(c.Routes))
 	for i := 0; i < len(r); i++ {
-		r[0] = conf.Routes[i].toRoute()
+		r[0] = c.Routes[i].toRoute()
 	}
 	return
 }
