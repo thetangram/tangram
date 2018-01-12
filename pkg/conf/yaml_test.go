@@ -86,12 +86,12 @@ func TestToRoutes(t *testing.T) {
 	// sut
 	configYAML := ConfigYAML{
 		Routes: []RouteYAML{
-			RouteYAML{
+			{
 				Path:    "/path",
 				URL:     "http://domain.com/path/to/component",
 				Timeout: 3 * time.Second,
 			},
-			RouteYAML{
+			{
 				Path:    "/path",
 				URL:     "http://domain.com/path/to/component",
 				Timeout: 3 * time.Second,
