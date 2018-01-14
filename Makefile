@@ -28,6 +28,9 @@ test:
 benchmark:
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _test-bench
 
+cover:
+	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _test-cover
+
 build: clean fmt test
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _build
 
@@ -38,7 +41,6 @@ install: build
 deploy: install
 	@docker push $(docker-image):$(version)
 	@docker push $(docker-image):latest
-
 
 
 _compile:
@@ -62,6 +64,10 @@ _test:
 
 _test-bench:
 	@go test -bench=. ./...
+
+_test-cover:
+	@go test -coverprofile=coverage.out github.com/thetangram/tangram/pkg/...
+	@go tool cover -html=coverage.out -o cover.html
 
 _build:
 	@CGO_ENABLED=0 GOOS=linux go build -a \
