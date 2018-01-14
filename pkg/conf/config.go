@@ -65,6 +65,7 @@ func new() (c Config) {
 // Load application configuration
 func Load() (c Config, err error) {
 	c = new()
+	c.loadEnv()
 	c.loadCmd()
 	return
 }
