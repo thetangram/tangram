@@ -58,3 +58,30 @@ func TestLoadConfigFromEnv(t *testing.T) {
 		t.Fail()
 	}
 }
+
+// TestNoEnvVariablesAndNothingIsChangedInConfig verifies that when
+// no env variables, nothing changes.
+func TestEnvWithWrongDurationFormat(t *testing.T) {
+	os.Setenv(envAddress, defaultAddress)
+	os.Setenv(envReadTimeout, "wrong")
+	os.Setenv(envWriteTimeout, "duration")
+	os.Setenv(envShutdownTimeout, "format")
+
+	// sut
+	println()
+	c := Config{}
+	c.loadEnv()
+	// assertions
+	if c.addr != defaultAddress {
+		t.Errorf("[%v] [%v]\n", c.addr, defaultAddress)
+	}
+	if c.readTimeout != 0 {
+		t.Errorf("[%v] [%v]\n", c.readTimeout, defaultReadTimeout)
+	}
+	if c.writeTimeout != 0 {
+		t.Errorf("[%v] [%v]\n", c.writeTimeout, defaultWriteTimeout)
+	}
+	if c.shutdownTimeout != 0 {
+		t.Errorf("[%v] [%v]\n", c.shutdownTimeout, defaultShutdownTimeout)
+	}
+}

@@ -21,7 +21,43 @@ routes:
 `)
 )
 
-// TestConfigFile check that a yaml structure can be unmarshaled
+// TestLoadYAML check that a yaml can be loaded
+func TestLoadYAML(t *testing.T) {
+	// expects
+	address := ":2018"
+	readTimeout := 5 * time.Second
+	writeTimeout := 5 * time.Second
+	shutdownTimeout := 20 * time.Second
+	//routes := 2
+	//routeOnePath := "/one"
+	// sut
+	c, err := loadYAML(yamlContent)
+	// assertions
+	if err != nil {
+		t.Fatalf("error: %v", err)
+	}
+	if c.Address() != address {
+		t.Fatalf("error parsing address: Expected: [%v], Returned: [%v]\n", address, c.Address())
+	}
+	if c.ReadTimeout() != readTimeout {
+		t.Fatalf("error parsing read timeout: Expected: [%v], Returned: [%v]\n", readTimeout, c.ReadTimeout())
+	}
+	if c.WriteTimeout() != writeTimeout {
+		t.Fatalf("error parsing read timeout: Expected: [%v], Returned: [%v]\n", writeTimeout, c.WriteTimeout())
+	}
+	if c.ShutdownTimeout() != shutdownTimeout {
+		t.Fatalf("error parsing read timeout: Expected: [%v], Returned: [%v]\n", shutdownTimeout, c.ShutdownTimeout())
+	}
+	// TODO fix this assertions
+	//if len(c.Routes()) != routes {
+	//	t.Fatalf("error parsing routes: Expected: [%v] routes, Returned: [%v] routes\n", routes, len(c.Routes))
+	//}
+	//if c.Routes()[0].Path != routeOnePath {
+	//	t.Fatalf("error parsing routes: Expected: [%v] routes, Returned: [%v] routes\n", routeOnePath, c.Routes[0].Path)
+	//}
+}
+
+// TestUnmarshal check that a yaml structure can be unmarshaled
 func TestUnmarshal(t *testing.T) {
 	// expects
 	address := ":2018"
