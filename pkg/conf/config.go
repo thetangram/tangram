@@ -12,8 +12,27 @@ import (
 	"time"
 )
 
+const (
+	defaultConfFile        = "tangram.yml"
+	defaultVerbose         = false
+	defaultShowVersion     = false
+	defaultHelp            = false
+	defaultAddress         = ":2018"
+	defaultReadTimeout     = 500 * time.Millisecond
+	defaultWriteTimeout    = 2 * time.Second
+	defaultShutdownTimeout = 5 * time.Second
+)
+
 // Config contains application configuration
 type Config struct {
+	// file is the configuration file
+	file string
+	// verbose starts tangram in verbose mode
+	verbose bool
+	// showVersion print version and exist
+	showVersion bool
+	// help prints in console the command line arguments and exists
+	help            bool
 	addr            string
 	readTimeout     time.Duration
 	writeTimeout    time.Duration
@@ -28,10 +47,34 @@ type Route struct {
 	timeout time.Duration
 }
 
+// Defaults creates a conf instance with default values
+func new() (c Config) {
+	c = Config{
+		file:            defaultConfFile,
+		verbose:         defaultVerbose,
+		showVersion:     defaultShowVersion,
+		help:            defaultHelp,
+		addr:            defaultAddress,
+		readTimeout:     defaultReadTimeout,
+		writeTimeout:    defaultWriteTimeout,
+		shutdownTimeout: defaultShutdownTimeout,
+	}
+	return
+}
+
 // Load application configuration
 func Load() (c Config, err error) {
-	c, _ = defaults()
+	c = new()
+	c.loadCmd()
 	return
+}
+
+func (c Config) ShowVersion() bool {
+	return c.showVersion
+}
+
+func (c Config) Verbose() bool {
+	return c.verbose
 }
 
 // Address gets the HTTP server address.

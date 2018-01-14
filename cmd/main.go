@@ -15,13 +15,6 @@ import (
 	"github.com/thetangram/tangram/pkg/conf"
 )
 
-const (
-	// application exit statuses
-	successExitStatus            = 0
-	errorLoadingConfig           = 1
-	errorStopintServerStatusCode = 2
-)
-
 var (
 	version   = "development"
 	build     = "undefined"
@@ -29,9 +22,23 @@ var (
 	isReady   = false
 )
 
+const (
+	// application exit statuses
+	successExitStatus            = 0
+	errorLoadingConfig           = 1
+	errorStopintServerStatusCode = 2
+)
+
 func main() {
-	printBanner()
 	conf, err := conf.Load()
+	if conf.ShowVersion() {
+		fmt.Printf("tangram version %v\n", version)
+		os.Exit(successExitStatus)
+	}
+	log.Println("Tangram")
+	if conf.Verbose() {
+		printBanner()
+	}
 	if err != nil {
 		log.Printf("Error loading configuration. Error: %v\n", err)
 		os.Exit(errorLoadingConfig)
@@ -42,11 +49,10 @@ func main() {
 
 // print application info
 func printBanner() {
-	log.Println("Tangram")
-	log.Printf("  version:      %s\n", version)
-	log.Printf("  build:        %s\n", build)
-	log.Printf("  build date:   %s\n", buildDate)
-	log.Printf("  startup date: %s\n", time.Now().Format(time.RFC3339))
+	log.Printf("\tversion:      %s\n", version)
+	log.Printf("\tbuild:        %s\n", build)
+	log.Printf("\tbuild date:   %s\n", buildDate)
+	log.Printf("\tstartup date: %s\n", time.Now().Format(time.RFC3339))
 }
 
 func startHTTPServer(c conf.Config) *http.Server {
