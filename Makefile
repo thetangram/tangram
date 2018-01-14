@@ -4,7 +4,7 @@ user="$(shell id -u):$(shell id -g)"
 build=$(shell git rev-parse --short HEAD)
 buildDate=$(shell date --rfc-3339=seconds)
 targetDir=/go/src/github.com/thetangram/tangram
-docker-image=tangram
+docker-image=jomoespe/tangram
 
 
 compile:
@@ -37,6 +37,7 @@ install: build
 
 deploy: install
 	@docker push $(docker-image):$(version)
+	@docker push $(docker-image):latest
 
 
 
