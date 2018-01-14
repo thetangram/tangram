@@ -22,7 +22,7 @@ type RouteYAML struct {
 	Timeout time.Duration `yaml:"timeout"`
 }
 
-func loadFromYAML(b []byte) (c Config, err error) {
+func loadYAML(b []byte) (c Config, err error) {
 	loaded := ConfigYAML{}
 	err = loaded.unmarshal(b)
 	if err != nil {
