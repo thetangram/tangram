@@ -69,10 +69,12 @@ func Load() (c Config, err error) {
 	return
 }
 
+// ShowVersion returns if version cmdline argument has been set
 func (c Config) ShowVersion() bool {
 	return c.showVersion
 }
 
+// ShowVersion returns if verbose cmdline argument has been set
 func (c Config) Verbose() bool {
 	return c.verbose
 }
