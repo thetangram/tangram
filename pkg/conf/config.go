@@ -106,6 +106,11 @@ func (c Config) ShutdownTimeout() time.Duration {
 	return c.shutdownTimeout
 }
 
+// Routes returns the array of configured routes.
+func (c Config) Routes() []Route {
+	return c.routes
+}
+
 // Path is the path Tangram routes to a service
 func (r Route) Path() string {
 	return r.path
