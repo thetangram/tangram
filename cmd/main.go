@@ -15,13 +15,6 @@ import (
 	"github.com/thetangram/tangram/pkg/conf"
 )
 
-var (
-	version   = "development"
-	build     = "undefined"
-	buildDate = "unknown"
-	isReady   = false
-)
-
 const (
 	// application exit statuses
 	successExitStatus            = 0
@@ -29,8 +22,19 @@ const (
 	errorStopintServerStatusCode = 2
 )
 
+var (
+	version   = "development"
+	build     = "undefined"
+	buildDate = "unknown"
+	isReady   = false
+)
+
 func main() {
 	conf, err := conf.Load()
+	if err != nil {
+		log.Printf("Error loading configuration. Error: %v\n", err)
+		os.Exit(errorLoadingConfig)
+	}
 	if conf.ShowVersion() {
 		fmt.Printf("tangram version %v\n", version)
 		os.Exit(successExitStatus)
@@ -38,10 +42,6 @@ func main() {
 	log.Println("Tangram")
 	if conf.Verbose() {
 		printBanner()
-	}
-	if err != nil {
-		log.Printf("Error loading configuration. Error: %v\n", err)
-		os.Exit(errorLoadingConfig)
 	}
 	server := startHTTPServer(conf)
 	waitAndShutdown(server, conf.ShutdownTimeout())
