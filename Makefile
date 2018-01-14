@@ -28,7 +28,7 @@ test:
 benchmark:
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _test-bench
 
-build: fmt test
+build: clean fmt test
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _build
 
 install: build
