@@ -58,6 +58,13 @@ func new() (c Config) {
 		readTimeout:     defaultReadTimeout,
 		writeTimeout:    defaultWriteTimeout,
 		shutdownTimeout: defaultShutdownTimeout,
+		routes: []Route{
+			Route{
+				path:    "/hello-world",
+				url:     "https://raw.githubusercontent.com/thetangram/hello-world/master/html/index.html",
+				timeout: 5 * time.Second,
+			},
+		},
 	}
 	return
 }

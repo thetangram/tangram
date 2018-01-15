@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/thetangram/tangram/pkg/conf"
+	"github.com/thetangram/tangram/pkg/routing"
 )
 
 const (
@@ -64,6 +65,7 @@ func startHTTPServer(c conf.Config) *http.Server {
 	}
 	http.HandleFunc("/healthy", healthyHandler)
 	http.HandleFunc("/ready", readyHandler)
+	register(c.Routes())
 	go func() {
 		log.Printf("Listening on %s\n", c.Address())
 		if err := server.ListenAndServe(); err != nil {
@@ -72,6 +74,13 @@ func startHTTPServer(c conf.Config) *http.Server {
 	}()
 	isReady = true
 	return server
+}
+
+func register(rr []conf.Route) {
+	for _, r := range rr {
+		router := routing.Router{r}
+		router.Register()
+	}
 }
 
 func waitAndShutdown(server *http.Server, timeout time.Duration) {
