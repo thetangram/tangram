@@ -45,8 +45,8 @@ func processNode(node *html.Node) html.Node {
 
 			}
 		} else {
-            
-        }
+
+		}
 	}
 	for c := node.FirstChild; c != nil; c = c.NextSibling {
 		processNode(c)
