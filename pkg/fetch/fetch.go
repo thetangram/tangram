@@ -1,7 +1,6 @@
 package fetch
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -42,7 +41,6 @@ func NewSimple(timeout time.Duration, url string) (r *Request, err error) {
 }
 
 func (r *Request) Fetch() (root *html.Node, err error) {
-	fmt.Printf("fetching  %v\n", r.Request.URL)
 	client := &http.Client{
 		//CheckRedirect: redirectPolicyFunc,
 		Timeout: r.timeout,
@@ -51,7 +49,6 @@ func (r *Request) Fetch() (root *html.Node, err error) {
 	if err != nil {
 		// Error performing request
 		log.Printf("Error fetching %v: %v\n", r.Request.URL, err)
-		//w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 	defer response.Body.Close()
