@@ -5,9 +5,9 @@ All configuration attributes are optional. If not defined the default value wiil
 
 | Attribute        | Type     | Default    | Description                                    |
 | -----------------|:--------:|:-----------|:-----------------------------------------------|
-| address          | string   | ":2018"    | The HTTP server.                               |
+| address          | string   | ":2018"    | The HTTP server address                        |
 | read timeout     | duration | 200ms      | The total time to load incoming request.       |
-| write timeout    | duration | 2s         | The total time to response to client.          |
+| write timeout    | duration | 2s         | The total time to respond to client.           |
 | shutdown timeout | duration | 5s         | Is the time for application graceful shutdown. |
 | routes           |          | empty list | List of routes...                              |
 | routes.path      | string   | "" (*)     | The path to map.                               |
@@ -36,3 +36,13 @@ routes:
   url: http://target.com/component-2
   timeout: 2s
 ```
+
+
+## Environment variables
+
+| Variable                 |  Description                                   |
+|:-------------------------|:-----------------------------------------------|
+| TANGRAM_ADDRESS          | The HTTP server address.                       |
+| TANGRAM_READ_TIMEOUT     | The total time to load incoming request.       |
+| TANGRAM_WRITE_TIMEOUT    | The total time to respond to client.           |
+| TANGRAM_SHUTDOWN_TIMEOUT | Is the time for application graceful shutdown. |
