@@ -22,7 +22,7 @@ type holderAttributes struct {
 	ttl          time.Duration
 }
 
-// Compose a node 
+// Compose a node
 func Compose(root *html.Node) (node html.Node, err error) {
 	node = processNode(root)
 	return
