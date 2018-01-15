@@ -1,4 +1,4 @@
-package routing
+package fetch
 
 import (
 	"log"
@@ -13,7 +13,7 @@ type Request struct {
 	timeout time.Duration
 }
 
-func new(source *http.Request, timeout time.Duration, url string) (r *Request, err error) {
+func New(source *http.Request, timeout time.Duration, url string) (r *Request, err error) {
 	temp, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return
@@ -28,7 +28,7 @@ func new(source *http.Request, timeout time.Duration, url string) (r *Request, e
 	return
 }
 
-func (r *Request) fetch() (root *html.Node, err error) {
+func (r *Request) Fetch() (root *html.Node, err error) {
 	client := &http.Client{
 		//CheckRedirect: redirectPolicyFunc,
 		Timeout: r.timeout,
