@@ -5,7 +5,8 @@ import (
 	"net/http"
 
 	"github.com/thetangram/tangram/pkg/conf"
-	"github.com/thetangram/tangram/pkg/fetch"
+    "github.com/thetangram/tangram/pkg/fetch"
+    "github.com/thetangram/tangram/pkg/composer"
 	"golang.org/x/net/html"
 )
 
@@ -33,5 +34,11 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	html.Render(w, root)
+    if composedNode, err:=composer.Compose(root); err == nil {
+        html.Render(w, composedNode)
+    } else {
+        // TODO ver como tratar el error de composicion!!!
+        log.Printf("Error composing url %v. Error: %v\n", r.URL(), err)
+        w.WriteHeader(http.StatusInternalServerError)
+    }
 }
