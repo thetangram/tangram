@@ -7,10 +7,10 @@ import (
 )
 
 const (
-	envAddress         = "ADDRESS"
-	envReadTimeout     = "READ_TIMEOUT"
-	envWriteTimeout    = "WRITE_TIMEOUT"
-	envShutdownTimeout = "SHUTDOWN_TIMEOUT"
+	envAddress         = "TANGRAM_ADDRESS"
+	envReadTimeout     = "TANGRAM_READ_TIMEOUT"
+	envWriteTimeout    = "TANGRAM_WRITE_TIMEOUT"
+	envShutdownTimeout = "TANGRAM_SHUTDOWN_TIMEOUT"
 )
 
 func (c *Config) loadEnv() {
