@@ -1,9 +1,9 @@
 package composer
 
 import (
+	"fmt"
 	"log"
 	"time"
-	//    "os"
 
 	"github.com/thetangram/tangram/pkg/fetch"
 	"golang.org/x/net/html"
@@ -22,6 +22,7 @@ type holderAttributes struct {
 	ttl          time.Duration
 }
 
+// Compose a node 
 func Compose(root *html.Node) (node html.Node, err error) {
 	node = processNode(root)
 	return
@@ -38,7 +39,7 @@ func processNode(node *html.Node) html.Node {
 			}
 			component, err := request.Fetch()
 			if err == nil {
-				cleanNode(node)
+				clean(node)
 				processed := processNode(component)
 				node.AppendChild(&processed)
 			}
@@ -63,9 +64,19 @@ func holder(node *html.Node) (bool, holderAttributes) {
 	return false, holderAttributes{}
 }
 
-func cleanNode(node *html.Node) {
-	for c := node.FirstChild; c != nil; c = c.NextSibling {
-		node.RemoveChild(c)
+func clean(node *html.Node) {
+	fmt.Println("entering to clean node")
+	fmt.Println("  removing child nodes...")
+	for n := node.FirstChild; n != nil; n = n.NextSibling {
+		if n.Type == html.ElementNode {
+			node.RemoveChild(n)
+		}
 	}
-	// here data-loc attribute (and all the rest tangram related attributes) should be removed
+	fmt.Println("  removing tangram attributes...")
+	for _, a := range node.Attr {
+		if a.Key == dataLocationAttr {
+			// TODO here remove this attribute from node.Attr array
+			fmt.Printf("    removing attribute %v\n", a.Key)
+		}
+	}
 }
