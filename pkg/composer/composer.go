@@ -3,6 +3,7 @@ package composer
 import (
 	"log"
 	"time"
+	//    "os"
 
 	"github.com/thetangram/tangram/pkg/fetch"
 	"golang.org/x/net/html"
@@ -35,17 +36,12 @@ func processNode(node *html.Node) html.Node {
 				log.Printf("Error creating target request. target URL: %v. Error: %v\n", target.src, err)
 				return *node
 			}
-			node, err := request.Fetch()
+			component, err := request.Fetch()
 			if err == nil {
 				cleanNode(node)
-				processed := processNode(node)
+				processed := processNode(component)
 				node.AppendChild(&processed)
-			} else {
-				log.Printf("Error fetching sub-componnet. %s\n", err)
-
 			}
-		} else {
-
 		}
 	}
 	for c := node.FirstChild; c != nil; c = c.NextSibling {
