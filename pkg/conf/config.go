@@ -47,7 +47,7 @@ type Route struct {
 	timeout time.Duration
 }
 
-// Defaults creates a conf instance with default values
+// Defaults creates a conf instance with default values.
 func new() (c Config) {
 	c = Config{
 		file:            defaultConfFile,
@@ -62,7 +62,14 @@ func new() (c Config) {
 	return
 }
 
-// Load application configuration
+// Load application configuration.
+// The configuration values can be set in environment variables,
+// a configuration file and command line arguments. The way configuration
+// is loaded is:
+// 1.- First load environment variables
+// 2.- Then load configuration file, and if some value overwrites the
+//     values already stablished.
+// 3.- Then reads the command line arguments, and overwrite values.
 func Load() (c Config, err error) {
 	c = new()
 	c.loadEnv()
