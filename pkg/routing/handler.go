@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-    "github.com/thetangram/tangram/pkg/conf"
-    "github.com/thetangram/tangram/pkg/fetch"
+	"github.com/thetangram/tangram/pkg/conf"
+	"github.com/thetangram/tangram/pkg/fetch"
 	"golang.org/x/net/html"
 )
 
@@ -32,8 +32,6 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
-
 
 	html.Render(w, root)
 }
