@@ -1,7 +1,6 @@
 package composer
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -65,18 +64,15 @@ func holder(node *html.Node) (bool, holderAttributes) {
 }
 
 func clean(node *html.Node) {
-	fmt.Println("entering to clean node")
-	fmt.Println("  removing child nodes...")
 	for n := node.FirstChild; n != nil; n = n.NextSibling {
 		if n.Type == html.ElementNode {
 			node.RemoveChild(n)
 		}
 	}
-	fmt.Println("  removing tangram attributes...")
 	for _, a := range node.Attr {
 		if a.Key == dataLocationAttr {
 			// TODO here remove this attribute from node.Attr array
-			fmt.Printf("    removing attribute %v\n", a.Key)
+			//fmt.Printf("    removing attribute %v\n", a.Key)
 		}
 	}
 }
