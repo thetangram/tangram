@@ -5,7 +5,7 @@ build=$(shell git rev-parse --short HEAD)
 buildDate=$(shell date --rfc-3339=seconds)
 targetDir=/go/src/github.com/thetangram/tangram
 docker-image=jomoespe/tangram
-
+tangramd-name=tangramd
 
 compile:
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _compile
@@ -28,8 +28,8 @@ test:
 benchmark:
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _test-bench
 
-cover:
-	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _test-cover
+#cover:
+#	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _test-cover
 
 build: clean fmt test
 	@docker run --rm --user $(user) -v "$(PWD)":$(targetDir) -w $(targetDir) $(build-image) make _build
@@ -44,7 +44,7 @@ deploy: install
 
 
 _compile:
-	@go build -v -o dist/tangram cmd/main.go
+	@go build -v -o dist/$(tangramd-name) cmd/main.go
 
 _init-dependencies:
 	@dep init -v
@@ -65,9 +65,9 @@ _test:
 _test-bench:
 	@go test -bench=. ./...
 
-_test-cover:
-	@go test -coverprofile=coverage.out github.com/thetangram/tangram/pkg/...
-	@go tool cover -html=coverage.out -o cover.html
+#_test-cover:
+#	@go test -coverprofile=coverage.out github.com/thetangram/tangram/pkg/...
+#	@go tool cover -html=coverage.out -o cover.html
 
 _build:
 	@CGO_ENABLED=0 GOOS=linux go build -a \
@@ -76,5 +76,5 @@ _build:
 	                                             -X 'main.version=$(version)' \
 	                                             -X 'main.build=$(build)' \
 	                                             -X 'main.buildDate=$(buildDate)'"  \
-	                                   -o dist/tangram \
+	                                   -o dist/$(tangramd-name) \
 									   cmd/main.go
