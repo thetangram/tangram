@@ -44,7 +44,7 @@ deploy: install
 
 
 _compile:
-	@go build -v -o dist/$(tangramd-name) cmd/main.go
+	@go build -v -o dist/$(tangramd-name) cmd/tangramd/main.go
 
 _init-dependencies:
 	@dep init -v
@@ -77,4 +77,4 @@ _build:
 	                                             -X 'main.build=$(build)' \
 	                                             -X 'main.buildDate=$(buildDate)'"  \
 	                                   -o dist/$(tangramd-name) \
-									   cmd/main.go
+									   cmd/tangramd/main.go
