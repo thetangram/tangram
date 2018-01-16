@@ -9,16 +9,21 @@ import (
 )
 
 const (
-	dataLocationAttr = "data-src"
+	dataSrc           = "data-src"
+	dataName          = "data-name"
+	dataTimeout       = "data-timeout"
+	dataHeaderFilter  = "data-headers-filter"
+	dataCookiesFilter = "data-cookies-filter"
+	dataTTL           = "data-ttl"
 )
 
 type holderAttributes struct {
-	src          string
-	name         string
-	timeout      time.Duration
-	headerFilter []string
-	cookieFilter []string
-	ttl          time.Duration
+	src           string
+	name          string
+	timeout       time.Duration
+	headersFilter []string
+	cookiesFilter []string
+	ttl           time.Duration
 }
 
 // Compose a node
@@ -50,17 +55,28 @@ func processNode(node *html.Node) html.Node {
 	return *node
 }
 
-func holder(node *html.Node) (bool, holderAttributes) {
+func holder(node *html.Node) (found bool, holderAttrs holderAttributes) {
 	for _, a := range node.Attr {
-		if a.Key == dataLocationAttr {
-			return true, holderAttributes{
-				src:     a.Val,
-				timeout: 5 * time.Second, // TODO Hardcoded!! Should come from attributes
-				// TODO process the rest of attributes
-			}
+		switch key := a.Key; key {
+		case dataSrc:
+			found = true
+			holderAttrs.src = a.Val
+		case dataName:
+			holderAttrs.name = a.Val
+			/*
+			        // Here we should parse the tag value to concrete type (duration, array,...)
+			        case dataTimeout:
+						holderAttrs.timeout = a.Val
+					case dataHeadersFilter:
+						holderAttrs.headersFilter = a.Val
+					case dataCookiesFilter:
+						holderAttrs.cookiesFilter = a.Val
+					case dataTTL:
+						holderAttrs.ttl = a.Val
+			*/
 		}
 	}
-	return false, holderAttributes{}
+	return
 }
 
 func clean(node *html.Node) {
@@ -70,7 +86,7 @@ func clean(node *html.Node) {
 		}
 	}
 	for _, a := range node.Attr {
-		if a.Key == dataLocationAttr {
+		if a.Key == dataSrc {
 			// TODO here remove this attribute from node.Attr array
 			//fmt.Printf("    removing attribute %v\n", a.Key)
 		}
