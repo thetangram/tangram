@@ -10,10 +10,12 @@ import (
 	"golang.org/x/net/html"
 )
 
+// Router is a routing configuration
 type Router struct {
 	conf.Route
 }
 
+// Register a route in the default HTTP server
 func (r *Router) Register() {
 	http.Handle(r.Path(), r)
 }
@@ -37,7 +39,7 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	if composedNode, err := composer.Compose(root); err == nil {
 		html.Render(w, &composedNode)
 	} else {
-		// TODO ver como tratar el error de composicion!!!
+		// TODO see how to deal with composition error
 		log.Printf("Error composing url %v. Error: %v\n", r.URL(), err)
 		w.WriteHeader(http.StatusInternalServerError)
 	}

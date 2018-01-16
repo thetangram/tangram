@@ -8,11 +8,13 @@ import (
 	"golang.org/x/net/html"
 )
 
+// Request to fetch a view or component
 type Request struct {
 	*http.Request
 	timeout time.Duration
 }
 
+// New request
 func New(source *http.Request, timeout time.Duration, url string) (r *Request, err error) {
 	temp, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -40,6 +42,7 @@ func NewSimple(timeout time.Duration, url string) (r *Request, err error) {
 	return
 }
 
+// Fetch a request and returns a DOM tree
 func (r *Request) Fetch() (root *html.Node, err error) {
 	client := &http.Client{
 		//CheckRedirect: redirectPolicyFunc,
