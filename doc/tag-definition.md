@@ -3,12 +3,11 @@
 ## Component holder tag
 
 ```html
-<tag data-src=[url] 
-     data-name=[component-name] 
-     data-timeout=[timeout] 
-     data-headers-filter=[string-list] 
-     data-cookie-filter=[string-list] 
-     data-ttl=[timeout]>
+<tag data-src=url
+     [data-name=component-name] 
+     [data-timeout=timeout] 
+     [data-headers-filter=string-list] 
+     [data-cookie-filter=string-list] >
     <!-- Fallback content -->
 </tag> 
 ```
@@ -20,7 +19,6 @@
 | data-timeout       | yes      | 1s      | The service request timeout.                  |
 | data-header-filter | yes      |         | List of request header fields to be filtered. |
 | data-cookie-filter | yes      |         | List of request header fields to be filtered. |
-| data-ttl           | yes      | 1h      | Time to live in cache. Default 1 hour.        |
 
 
 ### Examples
@@ -39,9 +37,8 @@ a default fallback:
 <section data-src=https://github.com/thetangram/sample-components/component1
          data-name=component-name
          data-timeout=1s
-         data-headers-filter=[Authorization] 
-         data-cookie-filter=[jsessionid] 
-         data-ttl=1d>
+         data-headers-filter=["Authorization"] 
+         data-cookie-filter=["jsessionid"]>
     <h1>Default content</h1>
     <p>This is the default content, if remote couldn't be retrieved.</p>
 </section> 
@@ -51,7 +48,7 @@ a default fallback:
 ## Component definition tag
 
 ```html
-<div data-name=[string]>
+<div data-name=component-name>
     <!-- Here the component content.
          Can be any html content, even another
          component. -->
